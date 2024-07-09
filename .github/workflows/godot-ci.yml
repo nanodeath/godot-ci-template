@@ -36,7 +36,8 @@ jobs:
       # Workaround for SharedArrayBuffer support on GitHub Pages
       # See: https://github.com/godotengine/godot-docs/issues/7084
       # https://github.com/godotengine/godot-proposals/issues/6616#issuecomment-1513340085
-      - run: |
+      - name: Inject coi-serviceworker
+        run: |
           cd $PROJECT_PATH/../build/web/
           apt-get install -y curl
           curl -fsSL https://github.com/gzuidhof/coi-serviceworker/raw/master/coi-serviceworker.js > coi-serviceworker.js
