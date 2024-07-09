@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c07exrxi85bon"]
+[gd_scene load_steps=18 format=3 uid="uid://c07exrxi85bon"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_objr7"]
 [ext_resource type="AudioStream" uid="uid://bwcw3jksjuu7a" path="res://sfx/alarm.ogg" id="2_tfaga"]
@@ -42,6 +42,14 @@ stream_10/weight = 1.0
 stream_11/stream = ExtResource("5_66fhy")
 stream_11/weight = 1.0
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_eakt2"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c3v73"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b86mr"]
+normal = Vector2(-1, 0)
+
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -50,6 +58,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_objr7")
+ball_lifetime = 5.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(400, 400)
@@ -81,5 +90,23 @@ autowrap_mode = 0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_odt3j")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(637, 654)
+shape = SubResource("WorldBoundaryShape2D_eakt2")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(0, 300)
+shape = SubResource("WorldBoundaryShape2D_c3v73")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(1152, 300)
+shape = SubResource("WorldBoundaryShape2D_b86mr")
 
 [connection signal="pressed" from="VBoxContainer/ClickButton" to="AudioStreamPlayer" method="play"]
