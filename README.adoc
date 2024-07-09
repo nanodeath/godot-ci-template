@@ -6,7 +6,7 @@ This is a Godot 4 template based on the excellent https://github.com/abarichello
 * It's a template, so you can just instance it superfast 🚀
 * It's optimized for web builds and GitHub Pages, though other platforms can be easily enabled in the GitHub Actions configuration.
 * It runs builds and deploys in separate steps. It's configured so that the `deploy` steps are skipped on non-mainline branches.
-* Uh, it comes with a _really_ spiffy ClickyClicker demo app I made in like, an hour.
+* Uh, it comes with a _really_ spiffy ClickyClicker demo app I made in like, an hour. You can play it https://nanodeath.github.io/godot-ci-template/[here].
 
 == Usage
 
