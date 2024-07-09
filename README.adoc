@@ -1,0 +1,33 @@
+= godot-ci-template
+:toc:
+
+This is a Godot 4 template based on the excellent https://github.com/abarichello/godot-ci[abarichello/godot-ci] repository, with a number of enhancements:
+
+* It's a template, so you can just instance it superfast 🚀
+* It's optimized for web builds and GitHub Pages, though other platforms can be easily enabled in the GitHub Actions configuration.
+* It runs builds and deploys in separate steps. It's configured so that the `deploy` steps are skipped on non-mainline branches.
+* Uh, it comes with a _really_ spiffy ClickyClicker demo app I made in like, an hour.
+
+== Usage
+
+1. Create a new repository from the template. Can be private or public, but GitHub Pages only works with public repositories (and Enterprise ones).
+2. Delete the `clicky-clicker` directory and replace it with your own new Godot project. Update the corresponding environment variables at the top of link:.github/workflows/godot-ci.yml[.github/workflows/godot-ci.yml].
+3. Replace the `LICENSE`.
+4. Have fun!
+
+== Setting up GitHub Pages
+
+The GitHub template only sets up the actual repository for you and not any of the settings. To enable GitHub Pages, which you'll need if you want to play your web export on GitHub, you'll need  to do two things:
+
+1. Ensure your repository is public. This is a bit unfortunate, but the cost of using GitHub I suppose. If not already a public repository, go to `Settings`, then at the bottom of the `General` subtab, click the red `Change visibility` button and change to public. 
+2. Still on the `Settings` tab, go to the `Pages` subtab, then ensure you're publishing, `Source`: `Deploy from a branch`, `Branch`: `gh-pages` `/ (root)`.
+
+You may need to push another change, but after that, you should be able to access your game at the URL at the top of the `Pages` subtab.
+
+== Publishing to itch.io
+
+TBD, it's not hard but it's kinda hard to templatize so it's left out for now.
+
+== C#/Mono/.NET?
+
+Godot 4, at least 4.2, https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_web.html[doesn't support web], so that's left out of this template.
