@@ -10,14 +10,11 @@ env:
   PROJECT_PATH: clicky-clicker
 
 jobs:
-  export-web:
-    name: Web Export
+  build-web:
+    name: Web Build
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:4.2.2
-    permissions:
-      # Grants permissions required to write to gh-pages branch.
-      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,7 +24,6 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          apt-get update
       - name: Web Build
         run: |
           mkdir -v -p build/web/
@@ -39,7 +35,7 @@ jobs:
       - name: Inject coi-serviceworker
         run: |
           cd $PROJECT_PATH/../build/web/
-          apt-get install -y curl
+          apt-get update && apt-get install -y curl
           curl -fsSL https://github.com/gzuidhof/coi-serviceworker/raw/master/coi-serviceworker.js > coi-serviceworker.js
           sed -i 's#\(		<script src="index.js"></script>\)#		<script src="coi-serviceworker.js"></script>\n\1#g' index.html
       - name: Upload Artifact
@@ -47,9 +43,23 @@ jobs:
         with:
           name: web
           path: build/web
-      - name: Install rsync 📚
-        run: apt-get install -y rsync
-      - name: Deploy to GitHub Pages 🚀
+
+  deploy-web:
+    name: Web Deploy
+    needs: build-web
+    runs-on: ubuntu-latest
+    # Only run deploy on mainline instead of all branches, like the build step.
+    if: github.ref == 'refs/heads/mainline'
+    permissions:
+      # Grants permissions required to write to gh-pages branch.
+      contents: write
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: web
+          path: build/web
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages # The branch the action should deploy to.
