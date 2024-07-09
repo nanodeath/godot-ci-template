@@ -13,6 +13,7 @@ jobs:
   export-windows:
     name: Windows Export
     runs-on: ubuntu-latest
+    if: false # remove if you want to enable
     container:
       image: barichello/godot-ci:4.2.2
     steps:
@@ -38,6 +39,7 @@ jobs:
   export-linux:
     name: Linux Export
     runs-on: ubuntu-latest
+    if: false # remove if you want to enable
     container:
       image: barichello/godot-ci:4.2.2
     steps:
@@ -95,7 +97,7 @@ jobs:
   export-mac:
     name: Mac Export
     runs-on: ubuntu-latest
-    if: false # remove unless you want to enable, but it's a whole thing: https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_macos.html
+    if: false # remove if you want to enable, but it's a whole thing: https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_macos.html
     container:
       image: barichello/godot-ci:4.2.2
     steps:
