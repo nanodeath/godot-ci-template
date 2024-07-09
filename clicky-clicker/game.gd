@@ -1,7 +1,7 @@
 class_name Game extends Control
 
 ## Seconds before the ball starts to decay.
-@export_range(1, 20) var ball_lifetime: float
+@export_range(1, 30) var ball_lifetime: float
 
 @onready var click_button: Button = $VBoxContainer/ClickButton
 @onready var counter_label: RichTextLabel = $VBoxContainer/CounterLabel
