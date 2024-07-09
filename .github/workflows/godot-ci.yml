@@ -54,6 +54,9 @@ jobs:
       # Grants permissions required to write to gh-pages branch.
       contents: write
     steps:
+      # We still need this checkout because github-pages-deploy-action expects it.
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
