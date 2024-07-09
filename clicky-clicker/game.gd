@@ -4,7 +4,11 @@ class_name Game extends Control
 @export_range(1, 30) var ball_lifetime: float
 
 @onready var click_button: Button = $VBoxContainer/ClickButton
-@onready var counter_label: RichTextLabel = $VBoxContainer/CounterLabel
+@onready var counter_label: RichTextLabel = $VBoxContainer/TotalCounterLabel
+@onready var current_counter_label = $VBoxContainer/CurrentCounterLabel
+
+var ball_count := 0
+var maximum_ball_count := 0
 
 const BALL = preload("res://ball.tscn")
 
@@ -38,8 +42,18 @@ func _button_pressed():
 		var tween = get_tree().create_tween()
 		var color := Color(randf(), randf(), randf(), 0)
 		tween.tween_property(ball, "modulate", color, 1)
-		tween.tween_callback(func(): ball.queue_free())
+		tween.tween_callback(func(): 
+			ball.queue_free()
+			ball_count -= 1
+			_update_current_ball_count()
+		)
 	)
+	ball_count += 1
+	maximum_ball_count = max(maximum_ball_count, ball_count)
+	_update_current_ball_count()
+
+func _update_current_ball_count():
+	current_counter_label.text = str(ball_count) + "/" + str(maximum_ball_count)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

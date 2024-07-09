@@ -58,7 +58,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_objr7")
-ball_lifetime = 20.0
+ball_lifetime = 10.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(400, 400)
@@ -76,14 +76,24 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
+[node name="CurrentCounterLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Current and maximum number of Godots on the screen."
+theme_override_font_sizes/normal_font_size = 24
+text = "0"
+fit_content = true
+autowrap_mode = 0
+
 [node name="ClickButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 200
 text = "Click!"
 
-[node name="CounterLabel" type="RichTextLabel" parent="VBoxContainer"]
+[node name="TotalCounterLabel" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+tooltip_text = "Total clicks"
 text = "0"
 fit_content = true
 autowrap_mode = 0
