@@ -27,6 +27,7 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          apt-get update
       - name: Web Build
         run: |
           mkdir -v -p build/web/
@@ -37,6 +38,7 @@ jobs:
       # https://github.com/godotengine/godot-proposals/issues/6616#issuecomment-1513340085
       - run: |
           cd $PROJECT_PATH/../build/web/
+          apt-get install -y curl
           curl -fsSL https://github.com/gzuidhof/coi-serviceworker/raw/master/coi-serviceworker.js > coi-serviceworker.js
           sed -i 's#\(		<script src="index.js"></script>\)#		<script src="coi-serviceworker.js"></script>\n\1#g' index.html
       - name: Upload Artifact
@@ -45,7 +47,7 @@ jobs:
           name: web
           path: build/web
       - name: Install rsync 📚
-        run: apt-get update && apt-get install -y rsync
+        run: apt-get install -y rsync
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
