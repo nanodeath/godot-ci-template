@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:4.2.2
+    permissions:
+      # Grants permissions required to write to gh-pages branch.
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
