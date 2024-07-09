@@ -38,7 +38,7 @@ jobs:
           cp external/coi-serviceworker/coi-serviceworker.js build/web/coi-serviceworker.js
           sed -i 's#\(		<script src="index.js"></script>\)#		<script src="coi-serviceworker.js"></script>\n\1#g' build/web/index.html
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: web
           path: build/web
