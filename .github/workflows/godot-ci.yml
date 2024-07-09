@@ -2,10 +2,8 @@ name: "godot-ci export"
 on: push
 
 env:
-  # The Godot version of the export template you're using. 
+  # The Godot version of the export template you're using. Should match the container.image versions below. 
   GODOT_VERSION: 4.2.2
-  # The Docker image you want to use. Version should match the Godot version obviously.
-  IMAGE: barichello/godot-ci:4.2.2
   # The name of the file to generate.
   EXPORT_NAME: clicky-clicker
   # The name of your game directory relative to the project root.
@@ -16,7 +14,7 @@ jobs:
     name: Windows Export
     runs-on: ubuntu-latest
     container:
-      image: ${{ env.IMAGE }}
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -41,7 +39,7 @@ jobs:
     name: Linux Export
     runs-on: ubuntu-latest
     container:
-      image: ${{ env.IMAGE }}
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -66,7 +64,7 @@ jobs:
     name: Web Export
     runs-on: ubuntu-latest
     container:
-      image: ${{ env.IMAGE }}
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -99,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     if: false # remove unless you want to enable, but it's a whole thing: https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_macos.html
     container:
-      image: ${{ env.IMAGE }}
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v2
