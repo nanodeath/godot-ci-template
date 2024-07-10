@@ -35,6 +35,7 @@ func _button_pressed():
 	ball.linear_velocity = velocity
 	add_child(ball)
 	ball.global_position = get_global_mouse_position()
+	ball.global_rotation = randf() * 2 * PI
 	
 	# Fade the ball out to a random transparent color after a while
 	var timer := get_tree().create_timer(ball_lifetime)
