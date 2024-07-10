@@ -91,7 +91,7 @@ jobs:
           path: build/web
       - name: Install butler
         run: |
-          apt-get install curl unzip
+          sudo apt-get install curl unzip
           curl -L -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           mv butler /usr/bin
