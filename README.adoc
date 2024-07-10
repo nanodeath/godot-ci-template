@@ -17,6 +17,8 @@ This is a Godot 4 template based on the excellent https://github.com/abarichello
 
 == Setting up GitHub Pages
 
+Example: https://nanodeath.github.io/godot-ci-template/
+
 The GitHub template only sets up the actual repository for you and not any of the settings. To enable GitHub Pages, which you'll need if you want to play your web export on GitHub, you'll need  to do two things:
 
 1. Ensure your repository is public. This is a bit unfortunate, but the cost of using GitHub I suppose. If not already a public repository, go to `Settings`, then at the bottom of the `General` subtab, click the red `Change visibility` button and change to public. 
@@ -24,9 +26,30 @@ The GitHub template only sets up the actual repository for you and not any of th
 
 You may need to push another change, but after that, you should be able to access your game at the URL at the top of the `Pages` subtab.
 
-== Publishing to itch.io
+== Publishing to itch.io (assuming web)
 
-TBD, it's not hard but it's kinda hard to templatize so it's left out for now.
+Example: https://nanodeath.itch.io/clicky-clicker
+
+1. Create your game (draft is fine) on itch.io.
+2. Configure your game, at least setting `Kind of project` to `HTML`: 
++
+image::readme_img/itch_project_setting.png[]
++
+3. Follow the directions https://itch.io/docs/butler/login.html[here] to get your itch.io Butler API key.
+4. Follow the directions https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions[here] to create a GitHub secret in your repository called `BUTLER_API_KEY` containing the API key you got from the previous step. `New repository secret` is fine.
+5. Update your link:.github/workflows/godot-ci.yml[godot-ci.yml] environment variables to at least refer to your itch.io project name.
+6. Commit that, push it, and wait for it to succeed.
+7. Once it succeeds, head back to your itch.io project page and ensure `This file will be played in the browser` is checked.
++
+image::readme_img/itch_upload_setting.png[]
++
+8. Finally, make sure your Embed options look like the following, especially the `SharedArrayBuffer support` setting:
++
+image::readme_img/itch_embed_setting.png[]
++
+
+And...that should be it.
+
 
 == C#/Mono/.NET?
 
