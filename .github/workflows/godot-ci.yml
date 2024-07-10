@@ -94,10 +94,9 @@ jobs:
           sudo apt-get install curl unzip
           curl -L -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
-          mv butler /usr/bin
-          chmod +x /usr/bin/butler
+          chmod +x butler
       - name: Push to itch.io
-        run: butler push build/web ${{ env.ITCHIO_PROJECT_NAME }}:${{ env.ITCHIO_CHANNEL_WEB }}
+        run: ./butler push build/web ${{ env.ITCHIO_PROJECT_NAME }}:${{ env.ITCHIO_CHANNEL_WEB }}
   
   export-windows:
     name: Windows Export
