@@ -8,6 +8,14 @@ env:
   EXPORT_NAME: clicky-clicker
   # The name of your game directory relative to the project root.
   PROJECT_PATH: clicky-clicker
+  # See https://itch.io/docs/butler/pushing.html for more information here.
+  # This is the user/game you're uploading.
+  ITCHIO_PROJECT_NAME: nanodeath/clicky-clicker
+  ITCHIO_CHANNEL_WEB: web
+  # You'll need to set this to auth pushes to itch.io
+  # 1. https://itch.io/docs/butler/login.html#running-butler-from-ci-builds-travis-ci-gitlab-ci-etc
+  # 2. https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions
+  ITCHIO_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
 jobs:
   build-web:
@@ -44,7 +52,7 @@ jobs:
           path: build/web
 
   deploy-web:
-    name: Web Deploy
+    name: "Web Deploy: GitHub Pages"
     needs: build-web
     runs-on: ubuntu-latest
     # Only run deploy on mainline instead of all branches, like the build step.
@@ -66,6 +74,30 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: build/web # The folder the action should deploy.
+  
+  deploy-web-itch:
+    # See https://itch.io/docs/butler/pushing.html
+    name: "Web Deploy: itch.io"
+    needs: build-web
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/mainline'
+    env:
+      BUTLER_API_KEY: ${{ env.ITCHIO_API_KEY }}
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: build/web
+      - name: Install butler
+        run: |
+          apt-get install curl unzip
+          curl -L -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          mv butler /usr/bin
+          chmod +x /usr/bin/butler
+      - name: Push to itch.io
+        run: butler push build/web ${{ ITCHIO_PROJECT_NAME }}:${{ ITCHIO_CHANNEL_WEB }}
   
   export-windows:
     name: Windows Export
