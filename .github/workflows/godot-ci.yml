@@ -12,10 +12,10 @@ env:
   # This is the user/game you're uploading.
   ITCHIO_PROJECT_NAME: nanodeath/clicky-clicker
   ITCHIO_CHANNEL_WEB: web
-  # You'll need to set this to auth pushes to itch.io
-  # 1. https://itch.io/docs/butler/login.html#running-butler-from-ci-builds-travis-ci-gitlab-ci-etc
-  # 2. https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions
-  ITCHIO_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+  
+# To auth pushes to itch.io, you'll also need to set a BUTLER_API_KEY variable 
+# 1. https://itch.io/docs/butler/login.html#running-butler-from-ci-builds-travis-ci-gitlab-ci-etc
+# 2. https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions
 
 jobs:
   build-web:
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/mainline'
     env:
-      BUTLER_API_KEY: ${{ env.ITCHIO_API_KEY }}
+      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v4
@@ -97,7 +97,7 @@ jobs:
           mv butler /usr/bin
           chmod +x /usr/bin/butler
       - name: Push to itch.io
-        run: butler push build/web ${{ ITCHIO_PROJECT_NAME }}:${{ ITCHIO_CHANNEL_WEB }}
+        run: butler push build/web ${{ env.ITCHIO_PROJECT_NAME }}:${{ env.ITCHIO_CHANNEL_WEB }}
   
   export-windows:
     name: Windows Export
