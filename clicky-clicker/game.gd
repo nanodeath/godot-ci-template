@@ -31,7 +31,7 @@ func _button_pressed():
 	
 	# Create a random "ball" for the lulz
 	var ball := BALL.instantiate()
-	var velocity := Vector2(1000, 0).rotated(randf() * 2 * PI)
+	var velocity := Vector2(1000, 0).rotated(randf() * -PI)
 	ball.linear_velocity = velocity
 	add_child(ball)
 	ball.global_position = get_global_mouse_position()
